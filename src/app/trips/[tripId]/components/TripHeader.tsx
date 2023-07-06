@@ -18,10 +18,10 @@ const TripHeader = ({ trip }: TripHeaderProps) => {
 
                 <div className="flex items-center gap-1 my-1">
                     <ReactCountryFlag countryCode={trip.countryCode} svg />
-                    <p className="text-xs text-greyPrimary underline">{trip.location}</p>
+                    <p className="text-xs text-grayPrimary underline">{trip.location}</p>
                 </div>
 
-                <p className="text-xs text-greyPrimary">
+                <p className="text-xs text-grayPrimary">
                     <span className="text-primary font-medium">R${trip.pricePerDay.toString()}</span> por dia
                 </p>
             </div>

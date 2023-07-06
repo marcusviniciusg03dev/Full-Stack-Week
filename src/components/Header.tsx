@@ -29,7 +29,7 @@ const Header: FunctionComponent = () => {
             )}
 
             {status === 'authenticated' && data.user && (
-                <div className="flex items-center gap-3 border-greyLighter border border-solid p-2 px-3 rounded-full relative">
+                <div className="flex items-center gap-3 border-grayLighter border border-solid p-2 px-3 rounded-full relative">
                     <AiOutlineMenu size={16} onClick={handleMenuClick} />
 
                     <Image height={35} width={35} src={`${data.user.image}`} alt={`${data.user.name}`} className="rounded-full shadow-md" />
