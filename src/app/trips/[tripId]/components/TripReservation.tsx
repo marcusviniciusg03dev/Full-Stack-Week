@@ -100,7 +100,7 @@ const TripReservation: FunctionComponent<TripReservationProps> = ({
             <div className="flex justify-between mt-3">
                 <p className="font-medium text-sm text-primaryDarker">Total:</p>
                 <p className="font-medium text-sm text-primaryDarker">
-                    {`R$${startDate && endDate ? differenceInDays(endDate, startDate) * pricePerDay : 'R$0'}`}
+                    {`R$${startDate && endDate ? differenceInDays(endDate, startDate) * pricePerDay : '0'}`}
                 </p>
             </div>
             <Button onClick={() => handleSubmit(console.log)()} className="mt-3">Reservar agora</Button>
