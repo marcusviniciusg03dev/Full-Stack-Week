@@ -7,7 +7,9 @@ import { FunctionComponent } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 interface TripReservationProps {
-    trip: Trip
+    tripStartDate: Date
+    tripEndDate: Date
+    maxGuests: number
 }
 
 interface TripReservationForm {
@@ -16,13 +18,20 @@ interface TripReservationForm {
     endDate: Date | null
 }
 
-const TripReservation: FunctionComponent<TripReservationProps> = (props) => {
+const TripReservation: FunctionComponent<TripReservationProps> = ({
+    tripStartDate,
+    tripEndDate,
+    maxGuests
+}) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
-        control
+        control,
+        watch
     } = useForm<TripReservationForm>();
+
+    const startDate = watch("startDate");
 
     return (
         <div className="flex flex-col px-5 pb-10 border-b border-grayLighter">
@@ -64,6 +73,8 @@ const TripReservation: FunctionComponent<TripReservationProps> = (props) => {
                             error={!!errors.endDate}
                             errorMessage={errors.endDate?.message}
                             className="w-full"
+                            maxDate={tripEndDate}
+                            minDate={tripStartDate ?? startDate}
                         />
                     )}
                 />
@@ -77,7 +88,7 @@ const TripReservation: FunctionComponent<TripReservationProps> = (props) => {
                     }
                 })
                 }
-                placeholder={`Número de hospedes (max: ${props.trip.maxGuests})`}
+                placeholder={`Número de hospedes (max: ${maxGuests})`}
                 className="mt-4"
                 error={!!errors.guests}
                 errorMessage={`${errors.guests?.message}`}
