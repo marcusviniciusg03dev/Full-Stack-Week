@@ -3,6 +3,7 @@ import { FunctionComponent, useState } from "react";
 import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { AiOutlineMenu } from "react-icons/ai";
+import Link from "next/link";
  
 const Header: FunctionComponent = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -20,9 +21,11 @@ const Header: FunctionComponent = () => {
 
     return (
         <header className="container mx-auto px-5 h-[93px] flex justify-between items-center">
-            <div className="relative w-[183px] h-[32px]">
-                <Image src="/logo.png" alt="Full Stack Week" fill />
-            </div>
+            <Link href="/">
+                <div className="relative w-[183px] h-[32px]">
+                    <Image src="/logo.png" alt="Full Stack Week" fill />
+                </div>
+            </Link>
 
             {status === 'unauthenticated' && (
                 <button onClick={handleSignInClick} className="text-primary text-sm font-semibold">Login</button>
@@ -35,7 +38,7 @@ const Header: FunctionComponent = () => {
                     <Image height={35} width={35} src={`${data.user.image}`} alt={`${data.user.name}`} className="rounded-full shadow-md" />
 
                     {menuOpen && (
-                        <div className="absolute top-12 w-full h-full bg-white rounded-full shadow-md flex flex-col justify-center items-center">
+                        <div className="z-50 absolute top-14 w-full h-full bg-white rounded-full shadow-md flex flex-col justify-center items-center">
                             <button className="text-primary text-sm font-semibold" onClick={handleLogoutClick}>Logout</button>
                         </div>
                     )}
