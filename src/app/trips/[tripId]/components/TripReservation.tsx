@@ -8,6 +8,7 @@ import { FunctionComponent } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 interface TripReservationProps {
+    tripId: string
     tripStartDate: Date
     tripEndDate: Date
     maxGuests: number
@@ -21,6 +22,7 @@ interface TripReservationForm {
 }
 
 const TripReservation: FunctionComponent<TripReservationProps> = ({
+    tripId,
     tripStartDate,
     tripEndDate,
     maxGuests,
@@ -36,6 +38,21 @@ const TripReservation: FunctionComponent<TripReservationProps> = ({
 
     const startDate = watch("startDate");
     const endDate = watch("endDate");
+
+    const onSubmit = async (data: TripReservationForm) => {
+        const response = await fetch('http://localhost:3000/api/trips/check', {
+            method: 'POST',
+            body: Buffer.from(JSON.stringify({
+                startDate: data.startDate,
+                endDate: data.endDate,
+                tripId,
+            }))
+        })
+
+        const res = await response.json();
+
+        console.log({ res })
+    }
 
     return (
         <div className="flex flex-col px-5 pb-10 border-b border-grayLighter">
@@ -103,7 +120,7 @@ const TripReservation: FunctionComponent<TripReservationProps> = ({
                     {`R$${startDate && endDate ? differenceInDays(endDate, startDate) * pricePerDay : '0'}`}
                 </p>
             </div>
-            <Button onClick={() => handleSubmit(console.log)()} className="mt-3">Reservar agora</Button>
+            <Button onClick={() => handleSubmit(onSubmit)()} className="mt-3">Reservar agora</Button>
         </div>
     );
 }
