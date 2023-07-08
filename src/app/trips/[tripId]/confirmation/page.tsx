@@ -7,6 +7,7 @@ import { Trip } from "@prisma/client";
 import ReactCountryFlag from "react-country-flag";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { toast } from "react-toastify";
 import Button from "@/components/Button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -19,7 +20,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
 
     const router = useRouter()
 
-    const { status } = useSession();
+    const { status, data } = useSession();
 
     const fetchTrip = async () => {
         const response = await fetch('http://localhost:3000/api/trips/check', {
@@ -48,6 +49,27 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
 
         fetchTrip();
     }, [params, router, status])
+
+    const handleBuyClick = async () => {
+        const response = await fetch('http://localhost:3000/api/trips/reservation', {
+            body: Buffer.from(JSON.stringify({
+                tripId: params.tripId,
+                startDate: searchParams.get('startDate'), 
+                endDate: searchParams.get('endDate'),
+                userId: (data?.user as any)?.id,
+                totalPaid: totalPrice,
+                guests: Number(searchParams.get('guests'))
+            }))
+        });
+
+        if (!response.ok) {
+            return toast.error("Ocorreu um erro ao realizar a reserva!", { position: "bottom-center" });
+        }
+
+        router.push("/");
+
+        toast.success("Reserva realizada com sucesso!", { position: "bottom-center" });
+    }
 
     if (!trip) return null;
 
@@ -98,7 +120,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
 
                 <p>{guests} hóspedes</p>
 
-                <Button className="mt-5">Finalizar compra</Button>
+                <Button className="mt-5" onClick={handleBuyClick}>Finalizar Compra</Button>
             </div>
         </div>
     );
