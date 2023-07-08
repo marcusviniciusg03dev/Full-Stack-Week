@@ -33,7 +33,8 @@ const TripReservation: FunctionComponent<TripReservationProps> = ({
         handleSubmit,
         formState: { errors },
         control,
-        watch
+        watch,
+        setError
     } = useForm<TripReservationForm>();
 
     const startDate = watch("startDate");
@@ -51,7 +52,32 @@ const TripReservation: FunctionComponent<TripReservationProps> = ({
 
         const res = await response.json();
 
-        console.log({ res })
+        if (res.error.code === 'TRIP_ALREADY_RESERVED') {
+            setError('startDate', {
+                type: 'manual',
+                message: 'Esta data já está reservada.',
+            });
+
+            setError('endDate', {
+                type: 'manual',
+                message: 'Esta data já está reservada.',
+            });
+        }
+
+        if (res.error.code === 'INVALID_START_DATE') {
+            setError('startDate', {
+                type: 'manual',
+                message: 'Data inválida.',
+            });
+        }
+
+        if (res.error.code === 'INVALID_END_DATE') {
+            setError('endDate', {
+                type: 'manual',
+                message: 'Data inválida.',
+            });
+        }
+
     }
 
     return (
