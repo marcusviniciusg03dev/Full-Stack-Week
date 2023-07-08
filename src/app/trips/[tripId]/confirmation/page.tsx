@@ -31,7 +31,11 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
             }))
         })
 
-        const { trip, totalPrice } = await response.json();
+        const { trip, totalPrice, error } = await response.json();
+
+        if (error) {
+            return router.push('/');
+        }
 
         setTrip(trip);
         setTotalPrice(totalPrice);
@@ -43,7 +47,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
         }
 
         fetchTrip();
-    }, [status])
+    }, [params, router, status])
 
     if (!trip) return null;
 
