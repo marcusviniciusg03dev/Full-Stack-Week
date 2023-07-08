@@ -52,27 +52,27 @@ const TripReservation: FunctionComponent<TripReservationProps> = ({
 
         const res = await response.json();
 
-        if (res.error.code === 'TRIP_ALREADY_RESERVED') {
+        if (res?.error?.code === 'TRIP_ALREADY_RESERVED') {
             setError('startDate', {
                 type: 'manual',
                 message: 'Esta data já está reservada.',
             });
 
-            setError('endDate', {
+            return setError('endDate', {
                 type: 'manual',
                 message: 'Esta data já está reservada.',
             });
         }
 
-        if (res.error.code === 'INVALID_START_DATE') {
+        if (res?.error?.code === 'INVALID_START_DATE') {
             setError('startDate', {
                 type: 'manual',
                 message: 'Data inválida.',
             });
         }
 
-        if (res.error.code === 'INVALID_END_DATE') {
-            setError('endDate', {
+        if (res?.error?.code === 'INVALID_END_DATE') {
+            return setError('endDate', {
                 type: 'manual',
                 message: 'Data inválida.',
             });
@@ -132,6 +132,10 @@ const TripReservation: FunctionComponent<TripReservationProps> = ({
                     required: {
                         value: true,
                         message: 'Número de hóspedes é obrigatório.'
+                    },
+                    max: {
+                        value: maxGuests,
+                        message: `Número de hóspedes não pode ser maior que ${maxGuests}.`
                     }
                 })
                 }
