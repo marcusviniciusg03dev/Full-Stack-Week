@@ -4,6 +4,7 @@ import DatePicker from "@/components/DatePicker";
 import Input from "@/components/Input";
 import { Trip } from "@prisma/client";
 import { differenceInDays } from "date-fns";
+import { useRouter } from "next/navigation";
 import { FunctionComponent } from "react";
 import { useForm, Controller } from "react-hook-form";
 
@@ -36,6 +37,8 @@ const TripReservation: FunctionComponent<TripReservationProps> = ({
         watch,
         setError
     } = useForm<TripReservationForm>();
+
+    const router = useRouter();
 
     const startDate = watch("startDate");
     const endDate = watch("endDate");
@@ -78,6 +81,7 @@ const TripReservation: FunctionComponent<TripReservationProps> = ({
             });
         }
 
+        router.push(`/trips/${tripId}/confirmation?startDate=${data.startDate?.toISOString()}&endDate=${data.endDate?.toISOString()}&guests=${data.guests}`)
     }
 
     return (
