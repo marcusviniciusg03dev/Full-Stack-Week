@@ -52,6 +52,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
 
     const handleBuyClick = async () => {
         const response = await fetch('http://localhost:3000/api/trips/reservation', {
+            method: 'POST',
             body: Buffer.from(JSON.stringify({
                 tripId: params.tripId,
                 startDate: searchParams.get('startDate'), 
