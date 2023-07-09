@@ -3,7 +3,9 @@ import { Prisma } from "@prisma/client";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import ReactCountryFlag from "react-country-flag";
+import { toast } from "react-toastify";
 
 interface UserReservationItemProps {
     reservation: Prisma.TripReservationGetPayload<{
@@ -12,7 +14,23 @@ interface UserReservationItemProps {
 }
 
 const UserReservationItem = ({ reservation }: UserReservationItemProps) => {
+    const router = useRouter();
+
     const { trip } = reservation;
+
+    const handleDeleteClick = async () => {
+        const response = await fetch(`http://localhost:3000/api/trips/reservation/${reservation.id}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            return toast.error("Ocorreu um erro ao cancelar a reserva!");
+        }
+
+        toast.success('Reserva cancelada com sucesso!', { position: 'bottom-center' });
+
+        router.replace('/');
+    };
 
     return (
         <div>
@@ -44,7 +62,7 @@ const UserReservationItem = ({ reservation }: UserReservationItemProps) => {
                     <p className="text-sm pb-5">{reservation.guests} hóspedes</p>
 
                     <h3 className="font-semibold text-primaryDarker mt-3 pt-5 border-t border-solid border-grayLighter">
-                        Informações sibre o preço
+                        Informações sobre o preço
                     </h3>
 
                     <div className="flex justify-between mt-1">
@@ -52,7 +70,7 @@ const UserReservationItem = ({ reservation }: UserReservationItemProps) => {
                         <p className="font-medium text-sm">R${Number(reservation.totalPaid)}</p>
                     </div>
 
-                    <Button variant="danger" className="mt-5">Cancelar</Button>
+                    <Button variant="danger" className="mt-5" onClick={handleDeleteClick}>Cancelar</Button>
                 </div>
             </div>
         </div>
