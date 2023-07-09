@@ -23,7 +23,7 @@ const MyTrips = () => {
     }
 
     useEffect(() => {
-        if (status === 'unauthenticated' && !(data as any)?.user) {
+        if (status === 'unauthenticated') {
             return router.push('/');
         }
 
@@ -34,7 +34,7 @@ const MyTrips = () => {
         <div className="container mx-auto p-5">
             <h1 className="font-semibold text-primaryDarker text-xl">Minhas Viagens</h1>
             {reservations.length ? reservations.map(reservation => 
-                <UserReservationItem key={reservation.id} reservation={reservation} />
+                <UserReservationItem key={reservation.id} fetchReservations={fetchReservations} reservation={reservation} />
             ) : (
                 <div className="flex flex-col">
                     <p className="mt-2 font-medium text-primaryDarker">Você ainda não tem nenhuma reserva.</p>
