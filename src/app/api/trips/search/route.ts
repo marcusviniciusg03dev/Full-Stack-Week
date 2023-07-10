@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 const generateSearchQuery = (text: string, startDate: string | null, budget: string | null) => {
@@ -24,7 +23,7 @@ const generateSearchQuery = (text: string, startDate: string | null, budget: str
         AND: [],
     }
 
-    if (startDate !== 'undefined') {
+    if (startDate !== 'undefined' && startDate !== 'null') {
         searchQuery = {
             ...searchQuery,
             AND: [
@@ -38,7 +37,7 @@ const generateSearchQuery = (text: string, startDate: string | null, budget: str
         }
     }
 
-    if (budget !== 'undefined') {
+    if (budget !== 'undefined' && budget !== 'null') {
         searchQuery = {
             ...searchQuery,
             AND: [
