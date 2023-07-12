@@ -9,7 +9,7 @@ interface TripHeaderProps {
 const TripHeader = ({ trip }: TripHeaderProps) => {
     return (
         <div className="flex flex-col">
-            <div className="relative h-[300px] w-full lg:hidden">
+            <div className="relative h-[380px] w-full lg:hidden">
                 <Image src={trip.coverImage} fill alt={trip.name} style={{ objectFit: 'cover' }} />
             </div>
 
