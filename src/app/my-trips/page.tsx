@@ -38,11 +38,11 @@ const MyTrips = () => {
                     <UserReservationItem key={reservation.id} fetchReservations={fetchReservations} reservation={reservation} />
                 </div>
             ) : (
-                <div className="flex flex-col">
+                <div className="flex flex-col lg:max-w-[500px]">
                     <p className="mt-2 font-medium text-primaryDarker">Você ainda não tem nenhuma reserva.</p>
 
                     <Link href="/">
-                        <Button className="w-full mt-2">
+                        <Button className="w-full mt-2 lg:mt-5">
                             Fazer Reserva
                         </Button>
                     </Link>

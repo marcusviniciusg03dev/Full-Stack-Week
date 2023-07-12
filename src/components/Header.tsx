@@ -20,7 +20,7 @@ const Header: FunctionComponent = () => {
     }
 
     return (
-        <header className="container mx-auto px-5 h-[93px] flex justify-between items-center">
+        <header className="container mx-auto px-5 h-[93px] flex justify-between items-center lg:border-b lg:border-grayLighter">
             <Link href="/">
                 <div className="relative w-[183px] h-[32px]">
                     <Image src="/logo.png" alt="Full Stack Week" fill />
