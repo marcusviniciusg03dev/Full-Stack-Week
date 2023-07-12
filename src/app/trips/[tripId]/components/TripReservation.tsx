@@ -85,7 +85,10 @@ const TripReservation: FunctionComponent<TripReservationProps> = ({
     }
 
     return (
-        <div className="flex flex-col px-5 pb-10 border-b border-grayLighter">
+        <div className="flex flex-col px-5 lg:border-grayLighter lg:min-w-[380px] lg:p-5 lg:border lg:rounded-lg lg:shadow-md">
+            <p className="text-xl hidden text-primaryDarker mb-4 lg:block">
+                <span className="font-semibold">R${pricePerDay}</span> por dia
+            </p>
             <div className="flex gap-4">
                 <Controller
                     name="startDate"
@@ -154,7 +157,9 @@ const TripReservation: FunctionComponent<TripReservationProps> = ({
                     {`R$${startDate && endDate ? differenceInDays(endDate, startDate) * pricePerDay : '0'}`}
                 </p>
             </div>
-            <Button onClick={() => handleSubmit(onSubmit)()} className="mt-3">Reservar agora</Button>
+            <div className="pb-10 border-b border-b-grayLighter w-full lg:border-none lg:pb-0">
+                <Button onClick={() => handleSubmit(onSubmit)()} className="mt-3 w-full">Reservar agora</Button> 
+            </div>
         </div>
     );
 }
