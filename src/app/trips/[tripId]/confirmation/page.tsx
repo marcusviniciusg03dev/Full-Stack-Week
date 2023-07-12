@@ -24,7 +24,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
     const { status, data } = useSession();
 
     const fetchTrip = async () => {
-        const response = await fetch('http://localhost:3000/api/trips/check', {
+        const response = await fetch('/api/trips/check', {
             method: 'POST',
             body: Buffer.from(JSON.stringify({
                 startDate: searchParams.get('startDate'),
@@ -52,7 +52,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
     }, [params, router, status])
 
     const handleBuyClick = async () => {
-        const response = await fetch('http://localhost:3000/api/payment', {
+        const response = await fetch('/api/payment', {
             method: 'POST',
             body: Buffer.from(JSON.stringify({
                 tripId: params.tripId,

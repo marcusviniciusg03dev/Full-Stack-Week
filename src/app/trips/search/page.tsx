@@ -10,7 +10,7 @@ const Trip = () => {
     const { get } = useSearchParams();
 
     const fetchTrips = async () => {
-        const response = await fetch(`http://localhost:3000/api/trips/search?text=${get('text')}&startDate=${get('startDate')}&budget=${get('budget')}`);
+        const response = await fetch(`/api/trips/search?text=${get('text')}&startDate=${get('startDate')}&budget=${get('budget')}`);
         
         setTrips(await response.json());
     };
